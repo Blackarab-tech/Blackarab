@@ -31,7 +31,7 @@ const AliveDB = DATABASE.define(
  */
 const getAliveMsg = async () => {
 	const msg = await AliveDB.findOne();
-	return msg?.message || `@user χѕтяσ мυℓтι ∂єνι¢є ιѕ αℓινє αи∂ α ѕιмρℓє ωнαтѕαρρ вσт мα∂є ωιтн иσ∂є נѕ\n\n*яυитιмє: &runtime*\n\n*νιѕт ωιкι ραgє тσ ¢υѕтσмιzє αℓινє мєѕѕαgє*\n\nhttps://github.com/AstroX11/Xstro/wiki/Alive-Message`;
+	return msg?.message || `*𝐇𝐞𝐲 𝐡𝐮𝐦𝐚𝐧* ${pushname}\n *𝐈 𝐚𝐦 𝐛𝐥𝐚𝐜𝐤𝐚𝐫𝐚𝐛-𝐦𝐝 𝐚𝐦 𝐚𝐥𝐢𝐯𝐞 𝐧𝐨𝐰 𝐡𝐨𝐰 𝐜𝐚𝐧 𝐢 𝐡𝐞𝐥𝐩 𝐲𝐨𝐮....! 🖐🏻*`;
 };
 
 /**

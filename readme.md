@@ -1,6 +1,6 @@
 # WhatsApp Bot in JavaScript
 
-Xstro WhatsApp Bot through the [WhatsApp Web API](https://github.com/WhiskeySockets/Baileys) is able to automate WhatsApp interactions, enabling you to send messages, manage contacts, and perform tasks easier and faster.
+Blackarab WhatsApp Bot through the [WhatsApp Web API](https://github.com/WhiskeySockets/Baileys) is able to automate WhatsApp interactions, enabling you to send messages, manage contacts, and perform tasks easier and faster.
 
 ![npm](https://img.shields.io/npm/dm/xstro-utils)
 

@@ -1,7 +1,7 @@
 {
-	"name": "xstro",
-	"description": "Simple WhatsApp By AstroX11",
-	"logo": "https://avatars.githubusercontent.com/u/188756392?v=4",
+	"name": "Blackarab",
+	"description": "Simple WhatsApp By Malibu",
+	"logo": "https://i.imgur.com/dHilafW.jpeg",
 	"repository": "https://github.com/ASTRO-X10/xstro-md",
 	"stack": "container",
 	"success_url": "/",
@@ -22,7 +22,7 @@
 		},
 		"BOT_INFO": {
 			"description": "Bot Owner, Bot Name, URL LOGO",
-			"value": "αѕтяσχ11;χѕтяσ м∂;https://avatars.githubusercontent.com/u/188756392?v=4",
+			"value": "blackarab bot;httpshttps://i.imgur.com/dHilafW.jpeg",
 			"required": false
 		},
 		"STICKER_PACK": {

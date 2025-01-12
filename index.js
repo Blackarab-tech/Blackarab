@@ -15,7 +15,7 @@ if (cluster.isMaster) {
 
 		worker.on('message', message => {
 			if (message === 'app.kill') {
-				console.log('Shutting down Xstro...');
+				console.log('Shutting down Blackarab...');
 				worker.kill();
 				process.exit(0);
 			} else if (message === 'restart') {

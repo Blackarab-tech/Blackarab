@@ -1,19 +1,19 @@
 import { bot } from '#lib';
-import { remini, uploadFile, XSTRO, removeBg, UploadFileUgu, createSticker } from '#utils';
-import { getBuffer, getJson } from 'xstro-utils';
+import { remini, uploadFile, upload, XSTRO, removeBg, UploadFileUgu } from '#utils';
+import { getBuffer } from 'xstro-utils';
 
 bot(
 	{
 		pattern: 'getpp',
 		public: true,
 		type: 'tools',
-		desc: 'Get Another Person Profile Image'
+		desc: 'Get Another Person Profile Image',
 	},
 	async (message, match) => {
 		const jid = await message.getUserJid(match);
 		const img = await message.getProfileImage(jid);
 		await message.send(img);
-	}
+	},
 );
 
 bot(
@@ -21,21 +21,18 @@ bot(
 		pattern: 'getbio',
 		public: true,
 		type: 'tools',
-		desc: 'Get the WhatsApp Bio of a User'
+		desc: 'Get the WhatsApp Bio of a User',
 	},
 	async (message, match) => {
 		const jid = await message.getUserJid(match);
 		const bioDetails = await message.client.fetchStatus(jid);
 		const { status, setAt } = bioDetails;
 		if (status && setAt) {
-			await message.send(
-				`\`\`\`@${jid.split('@')[0]} bio's\n\nBio: ${status}\n\nSetAt: ${setAt}\`\`\``,
-				{ mentions: [jid] }
-			);
+			await message.send(`\`\`\`@${jid.split('@')[0]} bio's\n\nBio: ${status}\n\nSetAt: ${setAt}\`\`\``, { mentions: [jid] });
 		} else {
 			message.send('_Unable to Get user bio_');
 		}
-	}
+	},
 );
 
 bot(
@@ -43,14 +40,14 @@ bot(
 		pattern: 'enhance',
 		public: true,
 		type: 'tools',
-		desc: 'Enahnces An Image'
+		desc: 'Enahnces An Image',
 	},
 	async message => {
 		if (!message.reply_message?.image) return message.send('_Reply An Image_');
 		const img = await message.download();
 		const enhancedImg = await remini(img, 'enhance');
 		await message.send(enhancedImg);
-	}
+	},
 );
 
 bot(
@@ -58,14 +55,14 @@ bot(
 		pattern: 'recolor',
 		public: true,
 		type: 'tools',
-		desc: 'Recolors An Image'
+		desc: 'Recolors An Image',
 	},
 	async message => {
 		if (!message.reply_message?.image) return message.send('_Reply An Image_');
 		const img = await message.download();
 		const recoloredImg = await remini(img, 'recolor');
 		await message.send(recoloredImg);
-	}
+	},
 );
 
 bot(
@@ -73,14 +70,14 @@ bot(
 		pattern: 'dehaze',
 		public: true,
 		type: 'tools',
-		desc: 'Dehazes An Image'
+		desc: 'Dehazes An Image',
 	},
 	async message => {
 		if (!message.reply_message?.image) return message.send('_Reply An Image_');
 		const img = await message.download();
 		const dehazedImg = await remini(img, 'dehaze');
 		await message.send(dehazedImg);
-	}
+	},
 );
 
 bot(
@@ -88,22 +85,16 @@ bot(
 		pattern: 'upload',
 		public: true,
 		type: 'tools',
-		desc: 'Uploads A File'
+		desc: 'Uploads A File',
 	},
 	async message => {
-		if (
-			!message.reply_message.image &&
-			!message.reply_message.video &&
-			!message.reply_message.audio &&
-			!message.reply_message.sticker &&
-			!message.reply_message.document
-		) {
+		if (!message.reply_message.image && !message.reply_message.video && !message.reply_message.audio && !message.reply_message.sticker && !message.reply_message.document) {
 			return message.send('_Reply A File_');
 		}
 		const data = await message.download();
 		const url = await uploadFile(data);
 		await message.send(`*${url}*`);
-	}
+	},
 );
 
 bot(
@@ -111,17 +102,18 @@ bot(
 		pattern: 'getsticker',
 		public: true,
 		type: 'tools',
-		desc: 'Get A Sticker'
+		desc: 'Get A Sticker',
 	},
 	async (message, match) => {
 		if (!match) return message.send('_Provide A Query_');
 		const stickers = await XSTRO.searchSticker(match);
 		for (const sticker of stickers) {
 			const buffer = await getBuffer(sticker);
-			const stickerUrl = await createSticker(buffer);
+			const url = await upload(buffer);
+			const stickerUrl = await XSTRO.makeSticker(url.rawUrl);
 			await message.send(stickerUrl, { type: 'sticker' });
 		}
-	}
+	},
 );
 
 bot(
@@ -129,12 +121,12 @@ bot(
 		pattern: 'obfuscate',
 		public: true,
 		type: 'tools',
-		desc: 'Obfuscates A Code'
+		desc: 'Obfuscates A Code',
 	},
 	async (message, match) => {
 		const obfuscatedCode = await XSTRO.obfuscate(match || message.reply_message.text);
 		await message.send(obfuscatedCode);
-	}
+	},
 );
 
 bot(
@@ -142,12 +134,12 @@ bot(
 		pattern: 'pdf',
 		public: true,
 		type: 'tools',
-		desc: 'Generate Pdf Documents From text'
+		desc: 'Generate Pdf Documents From text',
 	},
 	async (message, match) => {
 		const pdfDoc = await XSTRO.generatePdf(match || message.reply_message?.text);
 		return await message.send(pdfDoc, { fileName: 'Converted Document' });
-	}
+	},
 );
 
 bot(
@@ -155,13 +147,13 @@ bot(
 		pattern: 'rmbg',
 		public: true,
 		type: 'tools',
-		desc: 'Removes background Image from photo'
+		desc: 'Removes background Image from photo',
 	},
 	async message => {
 		if (!message.reply_message?.image) return message.send('_Reply an image_');
 		const buff = await removeBg(await message.download());
 		return await message.send(buff);
-	}
+	},
 );
 
 bot(
@@ -169,7 +161,7 @@ bot(
 		pattern: 'gitstalk',
 		public: true,
 		type: 'tools',
-		desc: 'Stalk A Git User'
+		desc: 'Stalk A Git User',
 	},
 	async (message, match) => {
 		if (!match) return message.send('_Provide A GitUserName_');
@@ -184,9 +176,9 @@ Company: ${company || 'Not Set'}
 Created At: ${created_at || 'Not Available'}
 Followers: ${followers || 0}
 Following: ${following || 0}\`\`\``,
-			{ image: profile_pic }
+			{ image: profile_pic },
 		);
-	}
+	},
 );
 
 bot(
@@ -194,32 +186,19 @@ bot(
 		pattern: 'git',
 		public: true,
 		type: 'tools',
-		desc: 'Downloads all branches of a GitHub repository as ZIP files'
+		desc: 'Downloads a GitHub repository as ZIP',
 	},
 	async (message, match) => {
 		if (!match) return message.send('_Provide a GitHub repository URL_');
-		let repoUrl = match.endsWith('.git') ? match.replace('.git', '') : match;
-		const repoName = repoUrl.split('/').slice(3, 5).join('/');
-
-		const branchesUrl = `https://api.github.com/repos/${repoName}/branches`;
-		const branchData = await getJson(branchesUrl);
-
-		for (const branchInfo of branchData) {
-			const branch = branchInfo.name;
-			const zipUrl = `https://github.com/${repoName}/archive/refs/heads/${branch}.zip`;
-
-			try {
-				const buffer = await getBuffer(zipUrl);
-				await message.sendMessage(buffer, {
-					type: 'document',
-					mimetype: 'application/zip',
-					fileName: `${repoName.split('/')[1]}-${branch}.zip`
-				});
-			} catch {
-				return message.send('Failed to download repo');
-			}
-		}
-	}
+		const repoUrl = match.endsWith('.git') ? match : `${match}.git`;
+		const zipUrl = repoUrl.replace('.git', '/archive/refs/heads/main.zip');
+		const buffer = await getBuffer(zipUrl);
+		return await message.sendMessage(buffer, {
+			type: 'document',
+			mimetype: 'application/zip',
+			fileName: 'repo.zip',
+		});
+	},
 );
 
 bot(
@@ -227,17 +206,12 @@ bot(
 		pattern: 'upload2',
 		public: true,
 		desc: 'Uploads Any File to Ugg',
-		type: 'tools'
+		type: 'tools',
 	},
 	async message => {
-		if (
-			!message.reply_message.image &&
-			!message.reply_message.video &&
-			!message.reply_message.document
-		)
-			return message.send('_Reply Image/Video/Document_');
+		if (!message.reply_message.image && !message.reply_message.video && !message.reply_message.document) return message.send('_Reply Image/Video/Document_');
 		const media = await message.download(true);
 		const res = await UploadFileUgu(media);
 		return message.send(`*${res.url}*`);
-	}
+	},
 );

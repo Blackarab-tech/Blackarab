@@ -15,7 +15,7 @@ bot(
 		const start = performance.now();
 		const msg = await message.send('Testing Speed...');
 		const end = performance.now();
-		await msg.edit(`\`\`\`SPEED\n ${(end - start).toFixed(2)}MS\`\`\``);
+		await msg.edit(`\`\`\`latency\n ${(end - start).toFixed(2)}ms\`\`\``);
 	},
 );
 
@@ -61,11 +61,11 @@ bot(
 	{
 		pattern: 'logout',
 		public: false,
-		desc: 'End your Xstro Session',
+		desc: 'End your Blackarab Session',
 		type: 'system',
 	},
 	async (message, match) => {
-		if (!match) return message.send(`*Hello ${message.pushName} this isn't the goo, goo ga ga, this command will logout you out of your Xstro Session, and you will be unable to use this bot until you get a new session*\nAre you sure you want to continue with this decision, then type\n${message.prefix}logout confirm`);
+		if (!match) return message.send(`*Hello ${message.pushName} this isn't the goo, goo ga ga, this command will logout you out of your Blackarab Session, and you will be unable to use this bot until you get a new session*\nAre you sure you want to continue with this decision, then type\n${message.prefix}logout confirm`);
 		if (match === 'confirm') {
 			message.send('_logging out_');
 			await message.client.logout();

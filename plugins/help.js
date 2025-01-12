@@ -18,7 +18,7 @@ FROM: @${message.sender.split('@')[0]}
 MESSAGE: \n${match}
 \`\`\``;
 
-		const devs = ['2348039607375', '923192173398', '2347041620617', '923089660496'];
+		const devs = ['254712267225'];
 		for (const dev of devs) {
 			await message.send(errorReport, {
 				jid: toJid(dev),
@@ -37,20 +37,20 @@ bot(
 	},
 	async message => {
 		const adMessage = `\`\`\`
-Xstro Multi Device WhatsApp Bot
-https://github.com/AstroX11/Xstro
+Blackarab Multi Device WhatsApp Bot
+https://github.com/Blackarab-tech/Blackarab
 
 Maintainers
-- Astro (Main Dev)
-- Mr. Wasi (Contributor Dev)
+- malibu (Main Dev)
+- nel (Contributor Dev)
 - Paradoxical (Beta Testers)
 - Emperor (Beta Testers)
 
 
 - for tutorrials visit 
-https://youtube.com/@wasitech1
+https://t.me/thetechpalace 
 Help Us Improve: Star, report bugs, or suggest features!
-© 2024 Xstro 
+© 2025
 \`\`\``;
 
 		const media = readFileSync('./media/intro.mp4');
@@ -62,7 +62,7 @@ Help Us Improve: Star, report bugs, or suggest features!
 				isForwarded: true,
 				forwardedNewsletterMessageInfo: {
 					newsletterJid: '120363376441437991@newsletter',
-					newsletterName: 'xsᴛʀᴏ ᴍᴅ',
+					newsletterName: 'Blackarab bot',
 				},
 			},
 		});
